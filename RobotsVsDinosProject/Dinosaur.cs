@@ -15,20 +15,19 @@ namespace RobotsVsDinosProject
         public Random random;
 
         //constructor (spawner)
-        public Dinosaur()
+        public Dinosaur(string dinoType)
         {
             //all dinos/robots will have same base creation
-            //can pass in type through parameters of each unique dinosaur.  Can hard code health, 
-            //could create random variable to use here to randomly generate energy and attack power
-            //here we set random to = a new random class
-            //look into .Next method for random
+            this.dinoType = dinoType;
+            dinoHealth = 100;
+            dinoEnergy = 50;
+            dinoAttackPower = random.Next(10, 30);
         }
         //member methods(can do...)
       public void DinosaurAttack(Robot robot)
         {
-            //can attack one specific robot
-            //will take into account attack power of attack selected by dino, translate this into health lost on robot
-                //robot.health -= dino attack power
+            robot.robotHealth -= dinoAttackPower;
+            Console.WriteLine($"{robot.robotName} took {dinoAttackPower} damage and has {robot.robotHealth} health remaining!");
         }
         //Could create list of string they can select from.  We can create a new DinosaurAttack class for this array (and assign attack powers to each attack)
 
