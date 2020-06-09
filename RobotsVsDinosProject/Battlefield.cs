@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace RobotsVsDinosProject
@@ -19,9 +20,7 @@ namespace RobotsVsDinosProject
         }
         //member methods
         public void FullBattleMethod()
-            //doesn't need to take in parameters because robotFleet & dinoHerd will be accessible at all levels (global variable)
-            //ONLY METHODS USE PASCAL CASING, OTHERWISE USE CAMEL CASE
-            //Can split this into multiple functions.  (See below)
+
         {
             Console.WriteLine("Welcome to Robots VS Dinosaurs!\nOur current teams are as follows: ");
             DisplayCurrentStats(herd.dinosaurHerd, fleet.robotFleet);
@@ -30,13 +29,17 @@ namespace RobotsVsDinosProject
 
             while (fleet.robotFleet.Count > 0 && herd.dinosaurHerd.Count > 0)
             {
-                BattleRound(herd.dinosaurHerd, fleet.robotFleet);
+                DinoAttackRound(herd.dinosaurHerd, fleet.robotFleet);
+                if (fleet.robotFleet.Count == 0)
+                {
+                    break;
+                }
+                RobotAttackRound(herd.dinosaurHerd, fleet.robotFleet);
                 DisplayCurrentStats(herd.dinosaurHerd, fleet.robotFleet);
                 Console.WriteLine("Press any key to begin the next round!");
                 Console.ReadLine();
             }
             DisplayWinners();
-            //Let's turn this if statement into a DisplayWinners method! (then we will call it here)
          
         }
         public void DisplayWinners()
@@ -50,23 +53,25 @@ namespace RobotsVsDinosProject
                 Console.WriteLine("Sorry dinosaurs, looks like the robots win!");
             }
         }
-        public void BattleRound(List<Dinosaur> dinoHerd, List<Robot> robotFleet)
+        public void DinoAttackRound(List<Dinosaur> dinoHerd, List<Robot> robotFleet)
         {
-            Dinosaur dinosaur = dinoHerd[0];
-            Robot robot = robotFleet[0];
-            dinosaur.DinosaurAttack(dinosaur, robot);
-            if (robot.robotHealth <= 0)
+            dinoHerd[0].DinosaurAttack(dinoHerd[0], robotFleet[0]);
+            if (robotFleet[0].robotHealth <= 0)
             {
-               robotFleet.Remove(robot);
-               Console.WriteLine($"Oh no, it looks like {robot.robotName} has died!!  RIP in pieces");
+               Console.WriteLine($"Oh no, it looks like {robotFleet[0].robotName} has died!!  RIP in pieces");
+               robotFleet.Remove(robotFleet[0]);
             }
-            robot.RobotAttack(robot, dinosaur);
-            if (dinosaur.dinoHealth <= 0)
+        }    
+        
+        public void RobotAttackRound(List<Dinosaur> dinoHerd, List<Robot> robotFleet)
+        {
+            robotFleet[0].RobotAttack(robotFleet[0], dinoHerd[0]);
+            if (dinoHerd[0].dinoHealth <= 0)
             {
-                dinoHerd.Remove(dinosaur);
-                Console.WriteLine($"Uh oh!  Looks like {dinosaur.dinoType} has died!  That sucks");
+                Console.WriteLine($"Uh oh!  Looks like {dinoHerd[0].dinoType} has died!  That sucks");
+                dinoHerd.Remove(dinoHerd[0]);
             }
-        }     
+        }
        
         public void DisplayCurrentStats(List<Dinosaur> dinoHerd, List<Robot> robotFleet)
         {
@@ -83,15 +88,6 @@ namespace RobotsVsDinosProject
                 Robot currentRobot = robotFleet[i];
                 Console.WriteLine($"{ currentRobot.robotName} has {currentRobot.robotHealth} health remaining and {currentRobot.robotPowerLevel} power remaining!");
             }
-        }
-        public void DeclareWinner(bool dinosaurVictory)
-        {
-            if (dinosaurVictory == true)
-            {
-                Console.WriteLine("Sorry robots, looks like the dinosaurs win!");
-            }
-            else Console.WriteLine("Sorry dinosaurs, looks like the robots win!");
-        }
-
+        } 
     }
 }

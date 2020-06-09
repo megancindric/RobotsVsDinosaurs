@@ -23,6 +23,5 @@ namespace RobotsVsDinosProject
             }
             return attackArray;
         }
-
     }
 }

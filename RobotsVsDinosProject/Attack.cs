@@ -16,7 +16,6 @@ namespace RobotsVsDinosProject
             this.attackType = attackType;
             this.attackPower = random.Next(10, 30);
         }
-       
         //member methods(can do...)
     }
 }

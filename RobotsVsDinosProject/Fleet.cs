@@ -18,7 +18,6 @@ namespace RobotsVsDinosProject
                 Robot robot = new Robot(robotTypes[i]);
                 robotFleet.Add(robot);
             }
-            
         }
         //member methods(can do...)
       

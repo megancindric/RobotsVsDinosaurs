@@ -25,7 +25,6 @@ namespace RobotsVsDinosProject
             dinoAttackPower = random.Next(10,30) + dinoAttack.attackPower;
         }
         //member methods(can do...)
-
         public Attack SelectAttack(AttackArray attackArray)
         {
             int index = random.Next(0, 4);
