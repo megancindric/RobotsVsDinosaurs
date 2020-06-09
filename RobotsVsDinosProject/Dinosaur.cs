@@ -36,11 +36,9 @@ namespace RobotsVsDinosProject
         {
             robot.robotHealth -= dinoAttackPower;
             dinosaur.dinoEnergy -= 10;
+            robot.robotHealth = robot.robotHealth < 0 ? 0 : robot.robotHealth;
             Console.WriteLine($"{dinosaur.dinoType} attacks {robot.robotName} with {dinosaur.dinoAttack.attackType} and did {dinoAttackPower} damage. {robot.robotName} has {robot.robotHealth} health remaining!");
         }
-        //Could create list of string they can select from.  We can create a new DinosaurAttack class for this array (and assign attack powers to each attack)
-
-        //could create separate methods for different types of attack, each would require different energy and would do a different amount of damage
-            //we can replicate this setup for robots & weapons as well.  These should be pre-established lists & options, with user option to select which method
+       
     }
 }

@@ -8,37 +8,47 @@ namespace RobotsVsDinosProject
     class Battlefield
     {
         //member variables
-        public Fleet robotFleet;
-        public Herd dinoHerd;
-        public bool dinosaurVictory;
+        public Fleet fleet;
+        public Herd herd;
 
         //constructor
         public Battlefield()
         {
-            robotFleet = new Fleet();
-            dinoHerd = new Herd();
+            fleet = new Fleet();
+            herd = new Herd();
         }
         //member methods
-        public void FullBattleMethod(Fleet Fleet, Herd Herd)
+        public void FullBattleMethod()
+            //doesn't need to take in parameters because robotFleet & dinoHerd will be accessible at all levels (global variable)
+            //ONLY METHODS USE PASCAL CASING, OTHERWISE USE CAMEL CASE
+            //Can split this into multiple functions.  (See below)
         {
             Console.WriteLine("Welcome to Robots VS Dinosaurs!\nOur current teams are as follows: ");
-            DisplayCurrentStats(dinoHerd.dinosaurHerd, robotFleet.robotFleet);
+            DisplayCurrentStats(herd.dinosaurHerd, fleet.robotFleet);
             Console.WriteLine("Press any key to begin the battle!");
             Console.ReadLine();
 
-            while(Fleet.robotFleet.Count > 0 && Herd.dinosaurHerd.Count > 0)
+            while (fleet.robotFleet.Count > 0 && herd.dinosaurHerd.Count > 0)
             {
-                BattleRound(Herd.dinosaurHerd, Fleet.robotFleet);
-                DisplayCurrentStats(Herd.dinosaurHerd, Fleet.robotFleet);
+                BattleRound(herd.dinosaurHerd, fleet.robotFleet);
+                DisplayCurrentStats(herd.dinosaurHerd, fleet.robotFleet);
                 Console.WriteLine("Press any key to begin the next round!");
                 Console.ReadLine();
             }
-
-            if (Herd.dinosaurHerd.Count > Fleet.robotFleet.Count)
-                {
-                    Console.WriteLine("Sorry robots, looks like the dinosaurs win!");
-                }
-                else Console.WriteLine("Sorry dinosaurs, looks like the robots win!");
+            DisplayWinners();
+            //Let's turn this if statement into a DisplayWinners method! (then we will call it here)
+         
+        }
+        public void DisplayWinners()
+        {
+            if (herd.dinosaurHerd.Count > fleet.robotFleet.Count)
+            {
+                Console.WriteLine("Sorry robots, looks like the dinosaurs win!");
+            }
+            else
+            {
+                Console.WriteLine("Sorry dinosaurs, looks like the robots win!");
+            }
         }
         public void BattleRound(List<Dinosaur> dinoHerd, List<Robot> robotFleet)
         {
@@ -48,7 +58,7 @@ namespace RobotsVsDinosProject
             if (robot.robotHealth <= 0)
             {
                robotFleet.Remove(robot);
-                Console.WriteLine($"Oh no, it looks like {robot.robotName} has died!!  RIP in pieces");
+               Console.WriteLine($"Oh no, it looks like {robot.robotName} has died!!  RIP in pieces");
             }
             robot.RobotAttack(robot, dinosaur);
             if (dinosaur.dinoHealth <= 0)
@@ -56,18 +66,10 @@ namespace RobotsVsDinosProject
                 dinoHerd.Remove(dinosaur);
                 Console.WriteLine($"Uh oh!  Looks like {dinosaur.dinoType} has died!  That sucks");
             }
-        }
-            //Will continue as long as Count of dinoHerd && robotFleet >= 0
-     
-        public bool DinosaurVictory()
-        {
-            dinosaurVictory = false;
-            //refers to length of dino herd and length of dino fleet.  As they are defeated, count gets closer to 0.  When count is 0, they lose
-            return dinosaurVictory;
-        }
+        }     
+       
         public void DisplayCurrentStats(List<Dinosaur> dinoHerd, List<Robot> robotFleet)
         {
-            //before instantiating this we will need to check if game is still running
             Console.WriteLine("Current Dinosaur Stats:");
             for (int i = 0; i < dinoHerd.Count; i++)
             {
@@ -83,7 +85,6 @@ namespace RobotsVsDinosProject
             }
         }
         public void DeclareWinner(bool dinosaurVictory)
-            //this will be final step, outside of all other battlefield loops
         {
             if (dinosaurVictory == true)
             {

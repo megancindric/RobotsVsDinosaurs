@@ -38,6 +38,8 @@ namespace RobotsVsDinosProject
         {
             dinosaur.dinoHealth -= robotAttackPower;
             robot.robotPowerLevel -= 10;
+            dinosaur.dinoHealth = dinosaur.dinoHealth < 0 ? 0 : dinosaur.dinoHealth;
+            //Turnary Statement (if dinohealth is less than 0, we set it to 0, otherwise display dinohealth)
             Console.WriteLine($"{robot.robotName} attacks {dinosaur.dinoType} with {robot.robotWeapon.weaponType} and did {robotAttackPower} damage.  {dinosaur.dinoType} has {dinosaur.dinoHealth} health remaining!");
             //this will take into account robot's attack power, will detract from dinosaur target's health
             //if dinosaur.dinoHealth <= 0 run DinosaurDeath method
