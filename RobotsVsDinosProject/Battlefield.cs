@@ -17,49 +17,70 @@ namespace RobotsVsDinosProject
         {
             robotFleet = new Fleet();
             dinoHerd = new Herd();
-            //battlefield creates a new fleet and new herd, which means 3 dinos & 3 robots have been created
         }
-
         //member methods
-
-        //Battle Fight
-        public void DinoRobotFight()
+        public void FullBattleMethod(Fleet Fleet, Herd Herd)
         {
-          //  do (dinosaur attack sequence)
-            // do (robot attack sequence
-            //while (dinoHerd.Count > 0 && robotFleet.Count > 0)
+            Console.WriteLine("Welcome to Robots VS Dinosaurs!\nOur current teams are as follows: ");
+            DisplayCurrentStats(dinoHerd.dinosaurHerd, robotFleet.robotFleet);
+            Console.WriteLine("Press any key to begin the battle!");
+            Console.ReadLine();
+
+            while(Fleet.robotFleet.Count > 0 && Herd.dinosaurHerd.Count > 0)
             {
-                //for (int i = 0; i < dinoHerd.length; i++)
-                {
-
-                }
+                BattleRound(Herd.dinosaurHerd, Fleet.robotFleet);
+                DisplayCurrentStats(Herd.dinosaurHerd, Fleet.robotFleet);
+                Console.WriteLine("Press any key to begin the next round!");
+                Console.ReadLine();
             }
-           //first dinosaur will attack
 
-           //then robots will attack
-           //then we will display current standings
-           //then we will repeat
+            if (Herd.dinosaurHerd.Count > Fleet.robotFleet.Count)
+                {
+                    Console.WriteLine("Sorry robots, looks like the dinosaurs win!");
+                }
+                else Console.WriteLine("Sorry dinosaurs, looks like the robots win!");
+        }
+        public void BattleRound(List<Dinosaur> dinoHerd, List<Robot> robotFleet)
+        {
+            Dinosaur dinosaur = dinoHerd[0];
+            Robot robot = robotFleet[0];
+            dinosaur.DinosaurAttack(dinosaur, robot);
+            if (robot.robotHealth <= 0)
+            {
+               robotFleet.Remove(robot);
+                Console.WriteLine($"Oh no, it looks like {robot.robotName} has died!!  RIP in pieces");
+            }
+            robot.RobotAttack(robot, dinosaur);
+            if (dinosaur.dinoHealth <= 0)
+            {
+                dinoHerd.Remove(dinosaur);
+                Console.WriteLine($"Uh oh!  Looks like {dinosaur.dinoType} has died!  That sucks");
+            }
         }
             //Will continue as long as Count of dinoHerd && robotFleet >= 0
-            //Will first run for all dinosaurs, then run for all robots
-            //Dinosaurs = for all Dinosaurs in dinoHerd
-                //will select attack (randomly), then will select robot to attack (randomly)
-                //if a robot health reaches 0 we will run RobotDeath method (this should display a message)
-                //repeat this for robots
-            //this continues as long as both sides have attackers.  When one hits 0 it will trigger DinosaurVictory boolean which will display winner
-
-        //method for displaying current stats?
-        
-        //one "round" of fighting = iterating over entire dino herd & iterating over entire robot fleet
-        //each will randomly select a value which corresponds to which index we attack of opponent
-            //this random value will need to shrink in response to death 
+     
         public bool DinosaurVictory()
         {
             dinosaurVictory = false;
-
             //refers to length of dino herd and length of dino fleet.  As they are defeated, count gets closer to 0.  When count is 0, they lose
-            //can use this to create bool for if dinosaurs win or lose, then use this bool as parameter for victory statement
             return dinosaurVictory;
+        }
+        public void DisplayCurrentStats(List<Dinosaur> dinoHerd, List<Robot> robotFleet)
+        {
+            //before instantiating this we will need to check if game is still running
+            Console.WriteLine("Current Dinosaur Stats:");
+            for (int i = 0; i < dinoHerd.Count; i++)
+            {
+                Dinosaur currentDino = dinoHerd[i];
+                Console.WriteLine($"{currentDino.dinoType} has {currentDino.dinoHealth} health remaining and {currentDino.dinoEnergy} energy remaining!");
+            }
+
+            Console.WriteLine("Current Robot Stats");
+            for (int i = 0; i < robotFleet.Count; i++)
+            {
+                Robot currentRobot = robotFleet[i];
+                Console.WriteLine($"{ currentRobot.robotName} has {currentRobot.robotHealth} health remaining and {currentRobot.robotPowerLevel} power remaining!");
+            }
         }
         public void DeclareWinner(bool dinosaurVictory)
             //this will be final step, outside of all other battlefield loops
@@ -70,5 +91,6 @@ namespace RobotsVsDinosProject
             }
             else Console.WriteLine("Sorry dinosaurs, looks like the robots win!");
         }
+
     }
 }

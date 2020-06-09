@@ -8,36 +8,35 @@ namespace RobotsVsDinosProject
     {
         //member variables(has a...)
         public string dinoType;
-        //what other type could we make this
         public int dinoHealth;
         public int dinoEnergy;
         public int dinoAttackPower;
+        public Attack dinoAttack;
         public Random random = new Random();
+        public AttackArray attackArray = new AttackArray();
 
         //constructor (spawner)
         public Dinosaur(string dinoType)
         {
-            //all dinos/robots will have same base creation
-
             this.dinoType = dinoType;
             dinoHealth = 100;
             dinoEnergy = 50;
-            dinoAttackPower = random.Next(10,30);
+            dinoAttack = SelectAttack(attackArray);
+            dinoAttackPower = random.Next(10,30) + dinoAttack.attackPower;
         }
         //member methods(can do...)
-        public Robot SelectRobotToAttack(List<Robot> robotFleet)
+
+        public Attack SelectAttack(AttackArray attackArray)
         {
-            int index = random.Next(0, robotFleet.Count);
-            Robot robotToAttack = robotFleet[index];
-            return robotToAttack;
+            int index = random.Next(0, 4);
+            Attack currentAttack = attackArray.attackArray[index];
+            return currentAttack;
         }
-        //OR do we return the int, then make parameter for dinosaur attack robotFleet[index]?
-   
-        public void DinosaurAttack(Robot robot)
-        //this will take in parameter from select robot to attack method
+        public void DinosaurAttack(Dinosaur dinosaur, Robot robot)
         {
             robot.robotHealth -= dinoAttackPower;
-            Console.WriteLine($"{robot.robotName} took {dinoAttackPower} damage and has {robot.robotHealth} health remaining!");
+            dinosaur.dinoEnergy -= 10;
+            Console.WriteLine($"{dinosaur.dinoType} attacks {robot.robotName} with {dinosaur.dinoAttack.attackType} and did {dinoAttackPower} damage. {robot.robotName} has {robot.robotHealth} health remaining!");
         }
         //Could create list of string they can select from.  We can create a new DinosaurAttack class for this array (and assign attack powers to each attack)
 

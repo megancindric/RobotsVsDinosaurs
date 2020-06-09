@@ -22,19 +22,6 @@ namespace RobotsVsDinosProject
         }
 
         //member methods(can do...)
-        public void DinosaurHerdAttack()
-        {
-            //this will create our loop for every robot attacking
-            for (int i = 0; i < dinosaurHerd.Count; i++)
-            {
-                //select robot to attack
-                //Attack that robot
-            }
-        }
-        public void DinosaurDeath(Dinosaur dinosaur)
-        {
-            dinosaurHerd.Remove(dinosaur);
-            Console.WriteLine($"Uh oh!  Looks like {dinosaur.dinoType} has died!  That sucks");
-        }
+       
     }
 }
