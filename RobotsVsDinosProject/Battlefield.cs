@@ -15,19 +15,31 @@ namespace RobotsVsDinosProject
         //constructor
         public Battlefield()
         {
-            this.dinoHerd = new Herd();
-            this.robotFleet = new Fleet();
+            robotFleet = new Fleet();
+            dinoHerd = new Herd();
             //battlefield creates a new fleet and new herd, which means 3 dinos & 3 robots have been created
         }
-
-
-        //can use dot notation, will create new fleet and herd here (this will go into a further layer & create 3 robots & 3 dinosaurs)
-
-        //switch case to indicate which will be attacked
 
         //member methods
 
         //Battle Fight
+        public void DinoRobotFight()
+        {
+          //  do (dinosaur attack sequence)
+            // do (robot attack sequence
+            //while (dinoHerd.Count > 0 && robotFleet.Count > 0)
+            {
+                //for (int i = 0; i < dinoHerd.length; i++)
+                {
+
+                }
+            }
+           //first dinosaur will attack
+
+           //then robots will attack
+           //then we will display current standings
+           //then we will repeat
+        }
             //Will continue as long as Count of dinoHerd && robotFleet >= 0
             //Will first run for all dinosaurs, then run for all robots
             //Dinosaurs = for all Dinosaurs in dinoHerd

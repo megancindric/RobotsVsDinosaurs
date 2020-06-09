@@ -14,9 +14,10 @@ namespace RobotsVsDinosProject
         {
             weaponList = new List<Weapon>();
             List<string> weaponNames = new List<string>() { "Chainsaw Gun", "Shark Cannon", "Can of Spaghetti", "Normal gun", "Bear Hands" };
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
                 Weapon weapon = new Weapon(weaponNames[i]);
+                weaponList.Add(weapon);
             }
     }
 }
